@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> {
               IconButton(
                   onPressed: () {
                     link = Uri.parse("sms:+972592729310");
-                    launchUrl(link!);
+                    launchUrl(link!, mode: LaunchMode.externalApplication);
                   },
                   icon: const Icon(
                     Icons.sms,
@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
               IconButton(
                   onPressed: () {
                     link = Uri.parse("mailto:bisaqwi06@gmail.com");
-                    launchUrl(link!);
+                    launchUrl(link!, mode: LaunchMode.externalApplication);
                   },
                   icon: const Icon(Icons.email, color: Colors.black)),
               IconButton(
