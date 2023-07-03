@@ -5,7 +5,7 @@ import 'package:flutter_midi/flutter_midi.dart';
 import 'package:piano/piano.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -34,55 +34,52 @@ class _MyAppState extends State<MyApp> {
   String? choice;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        showSemanticsDebugger: WidgetsApp.showPerformanceOverlayOverride,
-        home: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.grey[200],
-              title: const Text(
-                "Piano",
-                style: TextStyle(color: Colors.black),
-              ),
-              actions: [
-                DropdownButton(
-                    value: choice ?? "Geuiter",
-                    items: const [
-                      DropdownMenuItem(
-                          child: Text("Yamaha-Grand.sf2"),
-                          value: "Yamaha-Grand"),
-                      DropdownMenuItem(
-                        child: Text("Geuiter"),
-                        value: "Geuiter",
-                      ),
-                      DropdownMenuItem(
-                        child: Text("String"),
-                        value: 'String',
-                      )
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        choice = value;
-                        load('assets/$choice.sf2');
-                      });
-                    })
-              ],
-            ),
-            body: CupertinoApp(
-                title: 'Piano Demo',
-                home: Center(
-                  child: InteractivePiano(
-                    highlightedNotes: [NotePosition(note: Note.C, octave: 3)],
-                    naturalColor: Colors.white,
-                    accidentalColor: Colors.black,
-                    keyWidth: 60,
-                    noteRange: NoteRange.forClefs([
-                      Clef.Bass,
-                    ]),
-                    onNotePositionTapped: (position) {
-                      // Use an audio library like flutter_midi to play the sound
-                      flutterMidi.playMidiNote(midi: position.pitch);
-                    },
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.grey[200],
+          title: const Text(
+            "Piano",
+            style: TextStyle(color: Colors.black),
+          ),
+          actions: [
+            DropdownButton(
+                value: choice ?? "Geuiter",
+                items: const [
+                  DropdownMenuItem(
+                      child: Text("Yamaha-Grand.sf2"), value: "Yamaha-Grand"),
+                  DropdownMenuItem(
+                    child: Text("Geuiter"),
+                    value: "Geuiter",
                   ),
-                ))));
+                  DropdownMenuItem(
+                    child: Text("String"),
+                    value: 'String',
+                  )
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    choice = value;
+                    load('assets/$choice.sf2');
+                  });
+                })
+          ],
+        ),
+        body: CupertinoApp(
+            title: 'Piano Demo',
+            home: Center(
+              child: InteractivePiano(
+                highlightedNotes: [NotePosition(note: Note.C, octave: 3)],
+                naturalColor: Colors.white,
+                accidentalColor: Colors.black,
+                keyWidth: 60,
+                noteRange: NoteRange.forClefs([
+                  Clef.Bass,
+                ]),
+                onNotePositionTapped: (position) {
+                  // Use an audio library like flutter_midi to play the sound
+                  flutterMidi.playMidiNote(midi: position.pitch);
+                },
+              ),
+            )));
   }
 }
